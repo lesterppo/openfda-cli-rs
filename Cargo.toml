@@ -1,0 +1,30 @@
+[package]
+name = "openfda-cli-rs"
+version = "0.1.0"
+edition = "2021"
+description = "AI-native OpenFDA CLI in Rust — JSON-only output for autonomous agents. Rust port of lesterppo/openfda-cli."
+license = "MIT"
+repository = "https://github.com/lesterppo/openfda-cli-rs"
+
+[[bin]]
+name = "openfda-cli-rs"
+path = "src/main.rs"
+
+[lib]
+name = "openfda_cli_rs"
+path = "src/lib.rs"
+
+[dependencies]
+clap = { version = "4", features = ["cargo"] }
+# rustls-tls-native-roots (NOT webpki roots): the VM's egress proxy is
+# TLS-intercepting with a CA installed in the system bundle
+# (/etc/ssl/certs/hatch-egress-ca.pem). WebPKI roots reject it, which
+# surfaces as a bare "Connection failed"; native roots trust it, like curl.
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls-native-roots"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+chrono = "0.4"
+
+[dev-dependencies]
+tempfile = "3"
