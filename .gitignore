@@ -1,0 +1,5 @@
+/target/
+fda_cache.db
+fda_cache.db-wal
+fda_cache.db-shm
+logs/
